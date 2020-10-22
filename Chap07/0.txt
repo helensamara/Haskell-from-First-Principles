@@ -1,0 +1,29 @@
+comments to Weds = do
+  lexical scope
+
+  do =
+    f = (\x -> x*3)
+    :t f
+    g = f :: Integer -> Integer
+    :t g
+
+  \x -> x*3 $ 2
+
+  "We won't go into a lot of detail about this yet, but named entities and anonymous entities evaluate a bit differently in Haskell, and that can be one reason to use an anonymous function in some cases."
+
+  :{ and :} block syntax
+  
+  "It also allows us to unpack and expose the contents of our data. Some data constructors have parameters, and pattern matching can let us expose and make use of the data in their arguments"
+
+  "The next example uses newtype which is a special case of data"
+
+  Pattern match does not need Eq, differently than if else. The same for case _ of
+    see 1.hs
+
+  :browse, pg 358 || 406
+
+  "You can use case expressions with any datatype that has *visible* data constructors." pg 360 || 408
+
+  identation if then else
+
+  back to my SelfAppliable map (Y/temp4.hs)
