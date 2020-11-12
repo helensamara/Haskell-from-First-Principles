@@ -1,0 +1,20 @@
+* coments for wed 
+** Previous sections
+
+   - "When we talk about lists, we often talk about them in terms of “cons cells” and spines."
+    
+   - Maybe
+      
+   - "Later in the book, we’ll also cover a datatype called NonEmpty which always has at least one value and avoids the empty list problem."
+    
+   - "As we will soon see, this structure nests the cons cells rather than ordering them in a right-toleft row."
+    
+   - enumFromThenTo 3 7 131
+    
+   - take 5 $ enumFromThen 1 3
+    
+   - [1,4..13]
+    
+   - enumFromTo 't' 'a'
+   
+** 9.6

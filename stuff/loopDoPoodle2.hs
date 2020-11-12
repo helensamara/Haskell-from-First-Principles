@@ -1,31 +1,39 @@
+module ArthurCozinhando where
+
 import System.Random
 
 data AguaDoArroz = Agua Int Int StdGen
+data Paladar     = Paladar Int
 
 instance Show AguaDoArroz where
-  show (Agua n p g) = concat ["A agua esta no nivel ", show n, " de sal, depois de ", show p, " pitadas."]
-
-data Paladar = Paladar Int
+  show (Agua sal pitadas gen) = concat ["A agua esta no nivel ",
+                              show sal,
+                              " de sal, depois de ",
+                              show pitadas,
+                              " pitadas."]
 
 novaAgua :: StdGen -> AguaDoArroz
-novaAgua g = Agua 0 0 g
-
-poeUmPouquinhoDeSal :: AguaDoArroz -> AguaDoArroz
-poeUmPouquinhoDeSal (Agua n p g) =
-  Agua (n + pouquinho) (p+1)  g'
-    where (pouquinho, g') = randomR (1,4) g
+novaAgua gen = Agua 0 0 gen
 
 prova :: AguaDoArroz -> Paladar
-prova (Agua n p g) = Paladar $ n + uncertainty
-  where uncertainty = fst $ randomR (-2,2) g
+prova (Agua sal pitadas gen)
+  = Paladar $ sal + uncertainty
+      where uncertainty = fst $ randomR (-2,2) gen
 
-daPraSentir         :: Paladar -> Bool
+poeUmPouquinhoDeSal :: AguaDoArroz -> AguaDoArroz
+poeUmPouquinhoDeSal (Agua sal pitadas gen)
+  = Agua (sal + pouquinho) (pitadas + 1)  gen'
+      where (pouquinho, gen') = randomR (1,4) gen
+
+daPraSentir :: Paladar -> Bool
 daPraSentir (Paladar n) = n > 7
 
 salgarOArroz :: AguaDoArroz -> AguaDoArroz
-salgarOArroz a =
-  let a' = poeUmPouquinhoDeSal a in
-    if daPraSentir $ prova a' then a' else salgarOArroz a'
+salgarOArroz a
+  = let a' = poeUmPouquinhoDeSal a in
+      if daPraSentir $ prova a'
+      then a'
+      else salgarOArroz a'
 
-vamoLa :: Int -> AguaDoArroz
-vamoLa = salgarOArroz . novaAgua . mkStdGen
+boraLa :: Int -> AguaDoArroz
+boraLa = salgarOArroz . novaAgua . mkStdGen
