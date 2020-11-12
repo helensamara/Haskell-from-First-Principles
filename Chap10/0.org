@@ -1,2 +1,48 @@
-* Chap 10
-  - 
+* Chap10
+
+ - "(+) is not only strict in both of its arguments, but it’s unconditionally so"
+
+ - xs = map show [1..10]
+y = myFoldr (\a b -> concat ["(", a, " + ", b, ")"])
+      "0" xs
+
+  - Given this two-stage process and nonstrict evaluation
+    if
+    𝑓 doesn’t evaluate its second argument (rest of the fold), no
+    more of the spine will be forced. One of the consequences of
+    this is that foldr can avoid evaluating not only some or all of
+    the values in the list, but some or all of the list’s spine as well!
+
+  - Prelude> length [1, 2, 3, 4, undefined]
+    5
+    Prelude> length ([1, 2, 3, 4] ++ undefined)
+    *** Exception: Prelude.undefined
+
+  - Prelude> let xs = [1, 2] ++ undefined
+    Prelude> length $ take 2 $ take 4 xs
+    2
+
+  - scanr, scanl
+
+  - plusPlus' = flip $ foldr (:)
+
+  - myFoldr :: (a -> b -> b) -> b -> [a] -> b
+    myFoldl :: (b -> a -> b) -> b -> [a] -> b
+
+  - pg 558 (606), exercise 5, item (d): 
+    it is subtle, the problem appears with ``undefined``:
+    foldr (||) True [undefined]
+    No problem with foldl
+
+  - item (e): works with foldr. The problem is the order of the parameters in the 1st argument of foldl; the compiler says something awful. 
+
+  - item (f): the 2nd entry of const has no fixed type. GHC notes it before evaluating!
+
+  - Acho engracado que eu soh to percebendo agora como o texto eh vago de maneira confusa, precisa dos exemplos para entender.
+
+  - foldl eh o que da merda!? Tenho que pensar com cuidado
+
+  - foldl'
+
+  - pg 570 
+    repeat 0 ++ [1,2,3]
