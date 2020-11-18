@@ -34,3 +34,6 @@ elementAt' xs n = fst $ foldl f (error "out of range", n) xs
 
 lengthSen :: [a] -> Int
 lengthSen = foldr (\x n -> n+1) 0
+
+lengthSen' :: [a] -> Int
+lengthSen' = fst . last . zip [1..]
