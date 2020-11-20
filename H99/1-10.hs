@@ -37,3 +37,30 @@ lengthSen = foldr (\x n -> n+1) 0
 
 lengthSen' :: [a] -> Int
 lengthSen' = fst . last . zip [1..]
+
+-- 5. Reverse a list.
+
+reverseSen :: [a] -> [a]
+reverseSen = foldl (flip (:)) []
+
+reverseSen' :: [a] -> [a]
+reverseSen' = ($ []) . prependChain
+
+prependChain :: [a] -> [a] -> [a]
+prependMap   :: a -> ([a] -> [a]) -> ([a] -> [a])
+prependChain  = foldr prependMap id
+prependMap x g = g . (x:)
+
+-- 6. Find out whether a list is a palindrome.
+
+isPalindromeSen :: Eq a => [a] -> Bool
+isPalindromeSen x = reverseSen x == x
+
+{- isPalindromeSen' :: Eq a => [a] -> Bool
+isPalindromeSen' = foldr f (const True) x x
+  where f x g = (x ==) . (&&) . g -}
+
+isPalindromeSen'' x = and $ zipWith (==) x $ reverseSen x
+
+-- 7. Flatten a nested list structure. 
+
