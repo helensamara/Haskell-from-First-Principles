@@ -62,5 +62,19 @@ isPalindromeSen' = foldr f (const True) x x
 
 isPalindromeSen'' x = and $ zipWith (==) x $ reverseSen x
 
--- 7. Flatten a nested list structure. 
+-- 7. Flatten a nested list structure.
 
+data Nested a = Base a | List [Nested a]
+
+flattenSen :: [Nested a] -> [a]
+flattenSen [] = []
+flattenSen (x:xs)
+  = case x of
+    Base y -> y : flattenSen xs
+    List y -> flattenSen y ++ flattenSen xs
+
+flattenSen' :: [Nested a] -> [a]
+flattenSen' = foldr f []
+  where f :: Nested a -> [a] -> [a]
+        f (Base y) xs  = y : xs
+        f (List ys) xs = flattenSen' ys ++ xs
