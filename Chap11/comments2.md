@@ -1,8 +1,10 @@
 ## 11.8 What makes these datatypes algebraic?
-- data Example = MakeExample deriving Show
+- ```haskell
+  data Example = MakeExample deriving Show
   :i Example 
   data Example = MakeExample      -- Defined at <interactive>:30:1
-  instance \[safe\] Show Example -- Defined at <interactive>:30:37
+  instance [safe] Show Example    -- Defined at <interactive>:30:37
+  ```
 ## 11.9 newtype
 - However, one key contrast between a newtype and a type
   alias is that you can define typeclass instances for newtypes that
