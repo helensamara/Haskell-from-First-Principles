@@ -9,9 +9,28 @@ removeAt n xs = removeAtAux n (id, xs)
                       removeAtAux n (prependStart, y:ys)
                         = removeAtAux (n-1) (prependStart . (y:), ys)
 
+-- Nova versão do chong
+
+kthElem2 :: [a] -> Int -> a
+kthElem2 xs k = head $ foldr (\x -> tail) xs [1..k]
+
+-- Nova versão do removeAt
+
 removeAt' :: Int -> [a] -> (a, [a])
 removeAt' n _ | n < 0 = error "negative index"
-removeAt' n xs = let (m, prependStart, end) = foldl f (n, id, xs)
-                 in undefined
-                 where f :: (Int, [a] -> [a], [a]) -> a -> (Int, [a] -> [a], [a])
-                       f (m, )
+removeAt' n xs = (elem, prependStart end)
+  where
+    (elem, prependStart, end) = foldr f (undefined, id, xs) [0..n]
+    f _ (_, _, [])            = error "index too large"
+    f 0 (_, prepend, y:ys)    = (y, prepend, ys)
+    f _ (_, prepend, y:ys)    = (undefined, prepend . (y:), ys)
+
+-- Versão com Maybe
+
+removeAt'' :: Int -> [a] -> (Maybe a, [a])
+removeAt'' n xs = (elem, prependStart end)
+  where
+    (elem, prependStart, end) = foldr f (Nothing, id, xs) [0..n]
+    f _ (_, prepend, [])      = (Nothing, prepend       , [])
+    f 0 (_, prepend, y:ys)    = (Just y , prepend       , ys)
+    f _ (_, prepend, y:ys)    = (Nothing, prepend . (y:), ys)
