@@ -14,7 +14,7 @@ removeAt n xs = removeAtAux n (id, xs)
 kthElem2 :: [a] -> Int -> a
 kthElem2 xs k = head $ foldr (\x -> tail) xs [1..k]
 
--- Nova versão do removeAt
+-- Conciliando a minha versão com a ideia do Chong de colocar a lista como valor inicial:
 
 removeAt' :: Int -> [a] -> (a, [a])
 removeAt' n _ | n < 0 = error "negative index"
@@ -26,6 +26,7 @@ removeAt' n xs = (elem, prependStart end)
     f _ (_, prepend, y:ys)    = (undefined, prepend . (y:), ys)
 
 -- Versão com Either
+
 removeAt'' :: Int -> [a] -> (a, [a])
 removeAt'' n _ | n < 0 = error "negative index"
 removeAt'' n xs = (elem, list)
