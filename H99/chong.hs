@@ -25,10 +25,22 @@ removeAt' n xs = (elem, prependStart end)
     f 0 (_, prepend, y:ys)    = (y, prepend, ys)
     f _ (_, prepend, y:ys)    = (undefined, prepend . (y:), ys)
 
+-- Versão com Either
+removeAt'' :: Int -> [a] -> (a, [a])
+removeAt'' n _ | n < 0 = error "negative index"
+removeAt'' n xs = (elem, list)
+  where
+    (Left elem, list) = foldr f (Right id, xs) [0..n]
+    f :: Int -> (Either a ([a] -> [a]), [a]) -> (Either a ([a] -> [a]), [a])
+    f _ (_, [])               = error "index too large"
+    f 0 (Right prepend, y:ys) = (Left y, prepend ys)
+    f _ (Right prepend, y:ys) = (Right $ prepend . (y:), ys)
+    f _ _                     = error "If you are reading this, the programer fucked it up."
+
 -- Versão com Maybe
 
-removeAt'' :: Int -> [a] -> (Maybe a, [a])
-removeAt'' n xs = (elem, prependStart end)
+removeAt''' :: Int -> [a] -> (Maybe a, [a])
+removeAt''' n xs = (elem, prependStart end)
   where
     (elem, prependStart, end) = foldr f (Nothing, id, xs) [0..n]
     f _ (_, prepend, [])      = (Nothing, prepend       , [])
