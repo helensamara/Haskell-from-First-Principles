@@ -43,3 +43,5 @@
 
 - This is also nice for times when we want every typeclass
   instance to be the same *except* for the one we want to change.
+
+- FlexibleInstances
